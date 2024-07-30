@@ -22,7 +22,13 @@ variable iso_url{}
 variable boot_command{
   type=list(string)
 }
-
+variable vboxmanage{
+  type = list(list(string))
+}
+variable floppy_files{}
+variable communicator{}
+variable shutdown_command{}
+variable ssh_wait_timeout{}
 source "virtualbox-iso" "vm" {
  
   boot_command= "${var.boot_command}"
@@ -36,29 +42,21 @@ source "virtualbox-iso" "vm" {
     "${var.iso_url}"
   ]
   output_directory        = "${var.output_directory}" 
-  shutdown_command        = "echo '${var.ssh_password}'|sudo -S shutdown -P now" 
+  communicator="${var.communicator}"
   ssh_username            = "${var.ssh_username}"
   ssh_password            = "${var.ssh_password}"
-  ssh_wait_timeout        = "10000s"
+  floppy_files            = "${var.floppy_files}"
+  shutdown_command        = "${var.shutdown_command}"
+  shutdown_timeout        = "30m"
+  ssh_wait_timeout        = "${var.ssh_wait_timeout}"
   guest_additions_mode    = "disable"
-  vboxmanage             = [
-    ["modifyvm", "{{ .Name }}", "--audio", "none"], 
-    ["modifyvm", "{{ .Name }}", "--usb", "off"],
-    ["modifyvm", "{{ .Name }}", "--vram", "${var.vram}"], 
-    ["modifyvm", "{{ .Name }}", "--vrde", "off"], 
-    ["modifyvm", "{{.Name}}", "--nic1", "bridged"],
-    ["modifyvm", "{{.Name}}", "--bridgeadapter1","Intel(R) Wi-Fi 6E AX211 160MHz"],
-    ["modifyvm", "{{ .Name }}", "--memory", "${var.memory}"], 
-    ["modifyvm", "{{ .Name }}", "--cpus", "${var.cpus}"],
-    // ["modifyvm", "{{ .Name }}", "--natpf1", "guestssh,tcp,,2236,,22"]
-  ]
+  vboxmanage             = "${var.vboxmanage}"
   virtualbox_version_file = ".vbox_version"
   vm_name                 = "${var.vm_name}"
   format                  = "ova"
+
+
 }
-
-
-
 
 
 build {
