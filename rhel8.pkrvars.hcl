@@ -9,9 +9,9 @@ virtualbox_guest_os_type ="rhel8-64"
 version              = "0.1"
 update               = "true"
 communicator         = "ssh"
-ssh_username         = "rhel"
-ssh_password         = "rhelpassword"
-ssh_fullname         = "rhel"
+ssh_username         = "packer"
+ssh_password         = "packerpassword"
+ssh_fullname         = "packer"
 ssh_wait_timeout        = "10000s"
 iso_checksum="9b3c8e31bc2cdd2de9cf96abb3726347f5840ff3b176270647b3e66639af291b"
 http_proxy           = ""
@@ -40,5 +40,4 @@ vboxmanage             = [
 ["modifyvm", "{{ .Name }}", "--cpus", "2"],
 // ["modifyvm", "{{ .Name }}", "--natpf1", "guestssh,tcp,,2236,,22"]
 ]
-shutdown_command        = "echo rhelpassword|sudo -S shutdown -P now" 
 floppy_files=[]
