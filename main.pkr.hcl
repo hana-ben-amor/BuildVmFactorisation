@@ -6,7 +6,6 @@ variable "http_proxy" {}
 variable "https_proxy" {}
 variable "iso_checksum" {}
 variable "iso_checksum_type" {}
-variable "iso_url" {}
 variable "memory" {}
 variable "no_proxy" {}
 variable "ssh_fullname" {}
@@ -19,10 +18,7 @@ variable "vm_name" {}
 variable "home" {}
 variable "vram"{}
 variable output_directory{}
-variable ol7_iso_checksum{}
-variable ol7_iso_url{}
-variable ol8_iso_checksum{}
-variable ol8_iso_url{}
+variable iso_url{}
 variable boot_command{
   type=list(string)
 }
