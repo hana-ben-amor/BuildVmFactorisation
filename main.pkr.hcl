@@ -27,7 +27,6 @@ variable vboxmanage{
 }
 variable floppy_files{}
 variable communicator{}
-variable shutdown_command{}
 variable ssh_wait_timeout{}
 source "virtualbox-iso" "vm" {
  
@@ -46,7 +45,7 @@ source "virtualbox-iso" "vm" {
   ssh_username            = "${var.ssh_username}"
   ssh_password            = "${var.ssh_password}"
   floppy_files            = "${var.floppy_files}"
-  shutdown_command        = "${var.shutdown_command}"
+  shutdown_command        = "echo '${var.ssh_password}'|sudo -S shutdown -P now" 
   shutdown_timeout        = "30m"
   ssh_wait_timeout        = "${var.ssh_wait_timeout}"
   guest_additions_mode    = "disable"
@@ -54,7 +53,6 @@ source "virtualbox-iso" "vm" {
   virtualbox_version_file = ".vbox_version"
   vm_name                 = "${var.vm_name}"
   format                  = "ova"
-
 
 }
 
