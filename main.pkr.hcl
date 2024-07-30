@@ -23,14 +23,13 @@ variable ol7_iso_checksum{}
 variable ol7_iso_url{}
 variable ol8_iso_checksum{}
 variable ol8_iso_url{}
+variable boot_command{
+  type=list(string)
+}
 
 source "virtualbox-iso" "vm" {
  
-  boot_command= [
-        "<esc><wait>",
-        "vmlinuz initrd=initrd.img inst.ks=http://172.20.10.2:{{ .HTTPPort }}/ks.cfg",
-        "<enter>"
-  ]      
+  boot_command= "${var.boot_command}"
   disk_size               = "${var.disk_size}"
   guest_os_type           = "${var.virtualbox_guest_os_type}"
   hard_drive_interface    = "sata"
@@ -67,7 +66,7 @@ source "virtualbox-iso" "vm" {
 
 
 build {
-  sources = ["source.virtualbox-iso.oracle9"]
+  sources = ["source.virtualbox-iso.vm"]
   
   provisioner "file" {
   source      = ".ssh/id_ed25519.pub"
